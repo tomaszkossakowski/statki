@@ -5,29 +5,29 @@ import java.util.Scanner;
 /**
  * test
  */
-public class GraStatki
+public class GameShips
 {
     private char[][] tab = new char[10][10];
 
     public static void main(String[] args) throws ArrayIndexOutOfBoundsException
     {
-        GraStatki graStatki = new GraStatki();
+        GameShips gameShips = new GameShips();
 
-        int wyborUzytkownika;
+        int userSelection;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Witaj w grze w statki\n MENU\n11-reset planszy\n12-gra\n13-wyjscie\n");
 
-        graStatki.reset();
+        gameShips.reset();
         do
         {
-            wyborUzytkownika = scanner.nextInt();
-            switch (wyborUzytkownika)
+            userSelection = scanner.nextInt();
+            switch (userSelection)
             {
                 case 11:
-                    graStatki.reset();
+                    gameShips.reset();
                     break;
                 case 12:
-                    graStatki.planasza();
+                    gameShips.gameBoard();
                     int x = 0, y = 0;
                     do
                     {
@@ -37,8 +37,8 @@ public class GraStatki
                             x = scanner.nextInt();
                             System.out.println("podaj drugi parametr strzału(liczba od 0 do 9)");
                             y = scanner.nextInt();
-                            graStatki.shoot(x, y);
-                            graStatki.planasza();
+                            gameShips.shoot(x, y);
+                            gameShips.gameBoard();
                         }
                         catch (ArrayIndexOutOfBoundsException e)
                         {
@@ -49,12 +49,12 @@ public class GraStatki
                     System.out.println("dziękujemy i zapraszamy ponownie");
             }
         }
-        while (wyborUzytkownika != 13);
+        while (userSelection != 13);
         System.out.println("dziękujemy i zapraszamy ponownie");
 
     }
 
-    private void planasza()
+    private void gameBoard()
     {
         for (int i = 0; i < tab.length; i++)
         {
@@ -74,7 +74,7 @@ public class GraStatki
         Random random = new Random();
         final String s = "@+++";
         final int lenght = s.length();
-        GraStatki graReset = new GraStatki();
+        GameShips graReset = new GameShips();
 
         for (int i = 0; i < tab.length; i++)
         {
@@ -83,7 +83,7 @@ public class GraStatki
                 tab[i][y] = s.charAt(random.nextInt(lenght));
             }
         }
-        graReset.planasza();
+        graReset.gameBoard();
         System.out.println("\n");
     }
 
