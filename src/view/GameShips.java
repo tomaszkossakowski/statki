@@ -1,32 +1,40 @@
-import java.util.Random;
+package view;
+
 import java.util.Scanner;
 
-/**
- * test
- */
+import controller.GameBoard;
+import controller.Reset;
+import controller.Shoot;
+
+
 public class GameShips
 {
-    private char[][] tab = new char[10][10];
+    public static char[][] tab = new char[10][10];
 
     public static void main(String[] args) throws ArrayIndexOutOfBoundsException
     {
-        GameShips gameShips = new GameShips();
+        GameBoard gameBoard = new GameBoard();
+        Shoot shoot = new Shoot();
+        Reset reset = new Reset();
 
         int userSelection;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Witaj w grze w statki\n MENU\n11-reset planszy\n12-gra\n13-wyjscie\n");
 
-        gameShips.reset();
+        reset.reset();
         do
         {
             userSelection = scanner.nextInt();
             switch (userSelection)
             {
                 case 11:
-                    gameShips.reset();
+                    reset.reset();
+                    gameBoard.gameBoard();
+                    System.out.println("Witaj w grze w statki\n MENU\n11-reset planszy\n12-gra\n13-wyjscie\n");
                     break;
+
                 case 12:
-                    gameShips.gameBoard();
+                    gameBoard.gameBoard();
                     int x = 0, y = 0;
                     do
                     {
@@ -34,10 +42,26 @@ public class GameShips
                         {
                             System.out.println("podaj pierwszy parametr strzału(liczba od 0 do 9)");
                             x = scanner.nextInt();
+                            if (x == 11)
+                            {
+                                reset.reset();
+                                gameBoard.gameBoard();
+                                continue;
+                            }
+                            else if (x == 13)
+                            {
+                                break;
+                            }
                             System.out.println("podaj drugi parametr strzału(liczba od 0 do 9)");
                             y = scanner.nextInt();
-                            gameShips.shoot(x, y);
-                            gameShips.gameBoard();
+                            if (y == 11)
+                            {
+                                reset.reset();
+                                gameBoard.gameBoard();
+                                continue;
+                            }
+                            shoot.shoot(x, y);
+                            gameBoard.gameBoard();
                         }
                         catch (ArrayIndexOutOfBoundsException e)
                         {
@@ -46,57 +70,13 @@ public class GameShips
                     }
                     while (x != 13 || y != 13);
                     System.out.println("dziękujemy i zapraszamy ponownie");
+                    System.exit(0);
             }
         }
         while (userSelection != 13);
         System.out.println("dziękujemy i zapraszamy ponownie");
-
-    }
-
-    private void gameBoard()
-    {
-        for (int i = 0; i < tab.length; i++)
-        {
-            for (int j = 0; j < tab[i].length; j++)
-            {
-                System.out.print(tab[i][j] + " ");
-                if (j == 9)
-                {
-                    System.out.println();
-                }
-            }
-        }
-    }
-
-    private void reset()
-    {
-        Random random = new Random();
-        final String s = "@+++";
-        final int lenght = s.length();
-        GameShips graReset = new GameShips();
-
-        for (int i = 0; i < tab.length; i++)
-        {
-            for (int y = 0; y < tab[i].length; y++)
-            {
-                tab[i][y] = s.charAt(random.nextInt(lenght));
-            }
-        }
-        graReset.gameBoard();
-        System.out.println("\n");
-    }
-
-    private void shoot(int x, int y)
-    {
-        switch (tab[x][y])
-        {
-            case '+':
-                tab[x][y] = 'o';
-                break;
-            case '@':
-                tab[x][y] = 'X';
-                break;
-        }
-        System.out.println("\n");
     }
 }
+
+
+
