@@ -3,37 +3,34 @@ package view;
 import java.util.Scanner;
 
 import controller.GameBoard;
-import controller.Reset;
-import controller.Shoot;
 
 
 public class GameShips
 {
-    public static char[][] tab = new char[10][10];
 
     public static void main(String[] args) throws ArrayIndexOutOfBoundsException
     {
         GameBoard gameBoard = new GameBoard();
-        Shoot shoot = new Shoot();
-        Reset reset = new Reset();
-
+        final int reset = 11;
+        final int game = 12;
+        final int exit = 13;
         int userSelection;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Witaj w grze w statki\n MENU\n11-reset planszy\n12-gra\n13-wyjscie\n");
 
-        reset.reset();
+        gameBoard.reset();
         do
         {
             userSelection = scanner.nextInt();
             switch (userSelection)
             {
-                case 11:
-                    reset.reset();
+                case reset:
+                    gameBoard.reset();
                     gameBoard.gameBoard();
                     System.out.println("Witaj w grze w statki\n MENU\n11-reset planszy\n12-gra\n13-wyjscie\n");
                     break;
 
-                case 12:
+                case game:
                     gameBoard.gameBoard();
                     int x = 0, y = 0;
                     do
@@ -42,9 +39,9 @@ public class GameShips
                         {
                             System.out.println("podaj pierwszy parametr strzału(liczba od 0 do 9)");
                             x = scanner.nextInt();
-                            if (x == 11)
+                            if (x == reset)
                             {
-                                reset.reset();
+                                gameBoard.reset();
                                 gameBoard.gameBoard();
                                 continue;
                             }
@@ -56,11 +53,11 @@ public class GameShips
                             y = scanner.nextInt();
                             if (y == 11)
                             {
-                                reset.reset();
+                                gameBoard.reset();
                                 gameBoard.gameBoard();
                                 continue;
                             }
-                            shoot.shoot(x, y);
+                            gameBoard.shoot(x, y);
                             gameBoard.gameBoard();
                         }
                         catch (ArrayIndexOutOfBoundsException e)
